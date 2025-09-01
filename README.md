@@ -226,10 +226,6 @@ class YourTool(AsyncBaseIdSQLAlchemyCRUD):
 - PostgreSQL 12+
 - See `requirements.txt` for Python dependencies
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Contributing
 
 1. Fork the repository
