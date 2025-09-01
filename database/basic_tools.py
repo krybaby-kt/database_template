@@ -1,3 +1,16 @@
+"""
+Модуль базовых инструментов для работы с базой данных.
+
+Содержит абстрактные и конкретные классы-репозитории для выполнения 
+CRUD операций с асинхронной SQLAlchemy. Включает поддержку динамической
+фильтрации, сортировки, пагинации и автоматического повторения операций
+при ошибках подключения.
+
+Основные компоненты:
+- AsyncAbstractRepository: Абстрактный интерфейс репозитория
+- AsyncSQLAlchemyRepository: Базовая реализация репозитория
+- AsyncBaseIdSQLAlchemyCRUD: CRUD операции для моделей с ID
+"""
 from abc import ABC, abstractmethod
 from typing import Any, Optional, List, Dict, TypeVar, Type
 from sqlalchemy import BinaryExpression, select, update, delete, inspect, and_, desc, asc
