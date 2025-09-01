@@ -1,49 +1,49 @@
 # Database Template
 
-A comprehensive Python template for asynchronous database operations using SQLAlchemy and PostgreSQL. This template provides a robust foundation for building database-driven applications with async/await support, automatic retry mechanisms, and dynamic filtering capabilities.
+Комплексный Python шаблон для асинхронных операций с базой данных с использованием SQLAlchemy и PostgreSQL. Данный шаблон предоставляет надежную основу для создания приложений, работающих с базами данных, с поддержкой async/await, автоматическими механизмами повторных попыток и возможностями динамической фильтрации.
 
-## Features
+## Возможности
 
-- 🚀 **Async/Await Support** - Full asynchronous database operations
-- 🔄 **Automatic Retry Logic** - Built-in error handling with configurable retry attempts
-- 🔍 **Dynamic Filtering** - Flexible query building with multiple filter conditions
-- 📊 **Sorting & Pagination** - Built-in support for data sorting and pagination
-- 🏗️ **Repository Pattern** - Clean separation of database logic
-- 🔒 **Connection Pooling** - Optimized database connection management
-- 📝 **Type Hints** - Full typing support for better code quality
+- 🚀 **Поддержка Async/Await** - Полностью асинхронные операции с базой данных
+- 🔄 **Автоматическая логика повторов** - Встроенная обработка ошибок с настраиваемым количеством попыток
+- 🔍 **Динамическая фильтрация** - Гибкое построение запросов с множественными условиями фильтрации
+- 📊 **Сортировка и пагинация** - Встроенная поддержка сортировки данных и пагинации
+- 🏗️ **Паттерн Repository** - Четкое разделение логики работы с базой данных
+- 🔒 **Пулинг соединений** - Оптимизированное управление соединениями с базой данных
+- 📝 **Типизация** - Полная поддержка типов для лучшего качества кода
 
-## Project Structure
+## Структура проекта
 
 ```
 database_template/
 ├── database/
-│   ├── __init__.py          # Database initialization
-│   ├── base.py              # Database configuration and connection
-│   ├── basic_model.py       # Base model class
-│   ├── basic_tools.py       # Repository classes and CRUD operations
+│   ├── __init__.py          # Инициализация базы данных
+│   ├── base.py              # Конфигурация базы данных и соединение
+│   ├── basic_model.py       # Базовый класс модели
+│   ├── basic_tools.py       # Классы репозиториев и CRUD операции
 │   ├── models/
-│   │   └── test.py          # Example model
+│   │   └── test.py          # Пример модели
 │   └── tools/
-│       └── test.py          # Example repository
-├── test.py                  # Usage example
-├── requirements.txt         # Dependencies
-└── README.md               # This file
+│       └── test.py          # Пример репозитория
+├── test.py                  # Пример использования
+├── requirements.txt         # Зависимости
+└── README.md               # Этот файл
 ```
 
-## Installation
+## Установка
 
-1. Clone the repository:
+1. Клонируйте репозиторий:
 ```bash
 git clone https://github.com/your-username/database_template.git
 cd database_template
 ```
 
-2. Install dependencies:
+2. Установите зависимости:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Configure database connection in `database/base.py`:
+3. Настройте соединение с базой данных в `database/base.py`:
 ```python
 url = URL.create(
     drivername="postgresql+asyncpg",
@@ -55,9 +55,9 @@ url = URL.create(
 )
 ```
 
-## Quick Start
+## Быстрый старт
 
-### 1. Define Your Model
+### 1. Определите вашу модель
 
 ```python
 from database.basic_model import SQLAlchemyModel
@@ -71,7 +71,7 @@ class YourModel(SQLAlchemyModel):
     value = Column(Integer)
 ```
 
-### 2. Create Repository
+### 2. Создайте репозиторий
 
 ```python
 from database.basic_tools import AsyncBaseIdSQLAlchemyCRUD
@@ -82,7 +82,7 @@ class YourTool(AsyncBaseIdSQLAlchemyCRUD):
     field_id = "id"
 ```
 
-### 3. Use in Application
+### 3. Используйте в приложении
 
 ```python
 import asyncio
@@ -90,58 +90,58 @@ import database
 from your_tool import YourTool
 
 async def main():
-    # Initialize database tables
+    # Инициализация таблиц базы данных
     await database.init_models()
     
-    # Create record
+    # Создание записи
     record = await YourTool.create(data={"name": "example", "value": 42})
     
-    # Get record by ID
+    # Получение записи по ID
     found_record = await YourTool(record.id).get()
     
-    # Get all records with filters
+    # Получение всех записей с фильтрами
     filtered_records = await YourTool.get_all_with_filters(
         filters=[YourModel.value > 10],
         sort_by="name",
         limit=10
     )
     
-    # Update record
+    # Обновление записи
     await YourTool(record.id).update({"value": 100})
     
-    # Delete record
+    # Удаление записи
     await YourTool(record.id).delete()
 
 if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-## Core Components
+## Основные компоненты
 
 ### AsyncAbstractRepository
-Abstract base class defining the repository interface with all necessary CRUD operations.
+Абстрактный базовый класс, определяющий интерфейс репозитория со всеми необходимыми CRUD операциями.
 
 ### AsyncSQLAlchemyRepository
-Base implementation of the repository pattern with SQLAlchemy support, providing:
-- Basic CRUD operations
-- Dynamic filtering and sorting
-- Batch operations
+Базовая реализация паттерна репозиторий с поддержкой SQLAlchemy, предоставляющая:
+- Основные CRUD операции
+- Динамическая фильтрация и сортировка
+- Пакетные операции
 
 ### AsyncBaseIdSQLAlchemyCRUD
-Enhanced repository with ID-based operations, featuring:
-- Automatic retry mechanism (configurable attempts)
-- Unique ID generation
-- Session management
-- Error handling and logging
+Расширенный репозиторий с операциями на основе ID, включающий:
+- Автоматический механизм повторов (настраиваемое количество попыток)
+- Генерация уникальных ID
+- Управление сессиями
+- Обработка ошибок и логирование
 
 ### SQLAlchemyModel
-Base model class with convenient string representation methods for debugging and logging.
+Базовый класс модели с удобными методами строкового представления для отладки и логирования.
 
-## Advanced Features
+## Расширенные возможности
 
-### Dynamic Filtering
+### Динамическая фильтрация
 ```python
-# Multiple filter conditions
+# Множественные условия фильтрации
 records = await YourTool.get_all_with_filters(
     filters=[
         YourModel.status == "active",
@@ -151,9 +151,9 @@ records = await YourTool.get_all_with_filters(
 )
 ```
 
-### Sorting and Pagination
+### Сортировка и пагинация
 ```python
-# Sorted and paginated results
+# Отсортированные и пагинированные результаты
 records = await YourTool.get_all_with_filters(
     sort_by="created_date",
     sort_order="desc",
@@ -162,22 +162,22 @@ records = await YourTool.get_all_with_filters(
 )
 ```
 
-### Batch Operations
+### Пакетные операции
 ```python
-# Update multiple records
+# Обновление нескольких записей
 await YourTool.update_with_filters(
     data={"status": "processed"},
     filters=[YourModel.status == "pending"]
 )
 
-# Delete multiple records
+# Удаление нескольких записей
 await YourTool.delete_with_filters(
     filters=[YourModel.created_date < old_date]
 )
 ```
 
-### Custom Repository Methods
-Extend repositories with custom methods:
+### Пользовательские методы репозитория
+Расширяйте репозитории пользовательскими методами:
 
 ```python
 class YourTool(AsyncBaseIdSQLAlchemyCRUD):
@@ -195,45 +195,45 @@ class YourTool(AsyncBaseIdSQLAlchemyCRUD):
         await self.update({"value": current.value + amount})
 ```
 
-## Configuration
+## Конфигурация
 
-### Database Connection
-Configure your database connection in `database/base.py`:
+### Соединение с базой данных
+Настройте соединение с базой данных в `database/base.py`:
 
 ```python
-# Connection pool settings
+# Настройки пула соединений
 engine = create_async_engine(
     url, 
-    pool_size=25,           # Number of connections to maintain
-    max_overflow=50,        # Additional connections when pool is full
-    pool_timeout=300        # Timeout for getting connection from pool
+    pool_size=25,           # Количество соединений для поддержания
+    max_overflow=50,        # Дополнительные соединения при переполнении пула
+    pool_timeout=300        # Таймаут для получения соединения из пула
 )
 ```
 
-### Retry Settings
-Configure retry attempts for operations:
+### Настройки повторов
+Настройка количества попыток для операций:
 
 ```python
 class YourTool(AsyncBaseIdSQLAlchemyCRUD):
     model = YourModel
     field_id = "id"
-    count_attemps = 5  # Number of retry attempts
+    count_attemps = 5  # Количество попыток повтора
 ```
 
-## Requirements
+## Требования
 
 - Python 3.8+
 - PostgreSQL 12+
-- See `requirements.txt` for Python dependencies
+- См. `requirements.txt` для зависимостей Python
 
-## Contributing
+## Участие в разработке
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+1. Сделайте форк репозитория
+2. Создайте ветку для новой функциональности
+3. Внесите изменения
+4. Добавьте тесты, если применимо
+5. Отправьте pull request
 
-## Support
+## Поддержка
 
-If you encounter any issues or have questions, please open an issue on GitHub.
+Если у вас возникли проблемы или есть вопросы, пожалуйста, создайте issue на GitHub.
