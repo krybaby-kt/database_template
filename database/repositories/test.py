@@ -4,12 +4,12 @@
 Содержит класс TestTool для выполнения CRUD операций 
 с тестовыми записями в базе данных.
 """
-from database.basic_tools import AsyncBaseIdSQLAlchemyCRUD
+from database.repositories import AsyncBaseIdSQLAlchemyCRUD
 from database.models.test import TestModel
 from asyncio import Lock
 
 
-class TestTool(AsyncBaseIdSQLAlchemyCRUD):
+class TestRepository(AsyncBaseIdSQLAlchemyCRUD):
     """
     Инструмент для работы с тестовой моделью TestModel.
     
@@ -25,7 +25,6 @@ class TestTool(AsyncBaseIdSQLAlchemyCRUD):
     field_id = "id"
     lock: Lock = Lock()
 
-
     @staticmethod
     async def get_by_status(status: str) -> list[TestModel]:
         """
@@ -37,7 +36,7 @@ class TestTool(AsyncBaseIdSQLAlchemyCRUD):
         Returns:
             List[TestModel]: Список записей
         """
-        return await TestTool.get_all_with_filters(filters=[TestModel.status == status])
+        return await TestRepository.get_all_with_filters(filters=[TestModel.status == status])
     
     async def update_count(self, count: int):
         """

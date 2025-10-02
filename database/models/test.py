@@ -4,7 +4,7 @@
 Содержит модель TestModel для тестирования функционала CRUD операций
 и демонстрации работы с SQLAlchemy в асинхронном режиме.
 """
-from database.basic_model import SQLAlchemyModel
+from database.base_model import SQLAlchemyModel
 from sqlalchemy import BigInteger, Column, String, DateTime, Integer
 import datetime
 

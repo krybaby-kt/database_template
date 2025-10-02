@@ -7,7 +7,7 @@
 from database.base import engine, Base
 
 # Импортируем модели для автоматического создания таблиц в базе данных
-from database.models.test import TestModel
+from database.models import *
 
 
 async def init_models():
